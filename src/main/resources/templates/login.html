@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        #login-form {
+            margin: 200px auto;
+            width: 220px;
+        }
+        #login-form h1 {
+            text-align: center;
+        }
+        #login-form fieldset {
+            border: none;
+            padding: 20px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+<div id="login-form">
+    <h1>Please sign in</h1>
+    Login: root
+    <br>
+    Password: 1
+    <br>
+    <form method="post" action="/login">
+        <fieldset>
+        <input name="j_username"/>
+        <br><br>
+        <input name="j_password"/>
+        <br><br>
+        <input type="submit" value="Sign in"/>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>

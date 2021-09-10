@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Info</title>
+    <style>
+        th {
+            font-weight: normal;
+            color: #039;
+            padding: 10px 15px;
+        }
+        td {
+            color: #669;
+            border-top: 1px solid #e8edff;
+            padding: 10px 15px;
+        }
+        tr:nth-child(2n) {
+            background: #e8edff;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Roles</th>
+    </tr>
+    <tr>
+        <td><p th:text="${user.getId()}">VALUE</p></td>
+        <td><p th:text="${user.getUsername()}">VALUE</p></td>
+        <td><p th:text="${user.getAuthorities()}">VALUE</p></td>
+    <tr>
+</table>
+<br>
+
+<br>
+<button type="button" onclick="window.location.href = '/logout';">Logout</button>
+</body>
+</html>
