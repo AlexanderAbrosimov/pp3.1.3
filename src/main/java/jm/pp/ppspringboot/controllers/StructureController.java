@@ -71,9 +71,6 @@ public class StructureController {
         for(Long roleId: rolesId) {
             user.setRole(roleService.getRoleById(roleId));
         }
-        if (!userService.getUserById(user.getId()).getPassword().equals(user.getPassword())) {
-            user.setPassword(new BCryptPasswordEncoder(10).encode(user.getPassword()));
-        }
         userService.update(user);
         return "redirect:/admin";
     }
