@@ -14,9 +14,11 @@ import java.util.List;
 public class UserServiceImp implements UserService {
 
    private final UserDao userDao;
+   private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-   public UserServiceImp(UserDao userDao) {
+   public UserServiceImp(UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder) {
       this.userDao = userDao;
+      this.bCryptPasswordEncoder = bCryptPasswordEncoder;
    }
 
    @Override
@@ -26,6 +28,7 @@ public class UserServiceImp implements UserService {
 
    @Override
    public void save(User user) {
+      user.setPassword(new BCryptPasswordEncoder(10).encode(user.getPassword()));
       userDao.save(user);
    }
 

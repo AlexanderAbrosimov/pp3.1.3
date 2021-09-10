@@ -43,7 +43,7 @@ public class StructureController {
 
     @GetMapping("/admin/new")
     public String newUser(Model model) {
-        Model user = model.addAttribute("user", new User());
+        model.addAttribute("user", new User());
         model.addAttribute("allRoles", roleService.findAll());
         return "new";
     }
@@ -54,7 +54,6 @@ public class StructureController {
         for(Long roleId: rolesId) {
             user.setRole(roleService.getRoleById(roleId));
         }
-        user.setPassword(new BCryptPasswordEncoder(10).encode(user.getPassword()));
         userService.save(user);
         return "redirect:/admin";
     }
@@ -72,9 +71,7 @@ public class StructureController {
         for(Long roleId: rolesId) {
             user.setRole(roleService.getRoleById(roleId));
         }
-        if (userService.getUserById(user.getId()).getPassword().equals(user.getPassword())) {
-            user.setPassword(userService.getUserById(user.getId()).getPassword());
-        } else {
+        if (!userService.getUserById(user.getId()).getPassword().equals(user.getPassword())) {
             user.setPassword(new BCryptPasswordEncoder(10).encode(user.getPassword()));
         }
         userService.update(user);

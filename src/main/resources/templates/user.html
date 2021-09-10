@@ -24,11 +24,13 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>Age</th>
         <th>Roles</th>
     </tr>
     <tr>
         <td><p th:text="${user.getId()}">VALUE</p></td>
         <td><p th:text="${user.getUsername()}">VALUE</p></td>
+        <td><p th:text="${user.getAge()}">VALUE</p></td>
         <td><p th:text="${user.getAuthorities()}">VALUE</p></td>
     <tr>
 </table>

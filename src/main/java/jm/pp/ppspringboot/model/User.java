@@ -21,6 +21,9 @@ public class User implements UserDetails {
     @Column(name = "username", unique = true)
     private String username;
 
+    @Column(name = "age")
+    private int age;
+
     @Column(name = "password", nullable = false, length = 64)
     private String password;
 
@@ -33,8 +36,9 @@ public class User implements UserDetails {
 
     public User() {}
 
-    public User(String username, String password, Set<Role> roles) {
+    public User(String username, int age, String password, Set<Role> roles) {
         this.username = username;
+        this.age = age;
         this.password = password;
         this.roles = roles;
     }
@@ -96,6 +100,14 @@ public class User implements UserDetails {
         this.roles.add(role);
     }
 
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -114,11 +126,11 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username);
+        return age == user.age && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username);
+        return Objects.hash(id, username, age, password);
     }
 }

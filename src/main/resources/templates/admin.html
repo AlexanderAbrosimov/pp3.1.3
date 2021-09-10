@@ -26,6 +26,7 @@
         <th>ID</th>
         <th>Username</th>
         <th>Password</th>
+        <th>Age</th>
         <th>Roles</th>
         <th colspan="2">Actions</th>
     </tr>
@@ -34,6 +35,7 @@
             <td><p th:text="${user.getId()}">VALUE</p></td>
             <td><p th:text="${user.getUsername()}">user</p></td>
             <td><p th:text="${user.getPassword()}">user</p></td>
+            <td><p th:text="${user.getAge()}">user</p></td>
             <td><p th:text="${user.getAuthorities()}">user</p></td>
             <td><a th:href="@{/admin/{id}/edit (id=${user.getId()})}" >edit</a></td>
             <td>
