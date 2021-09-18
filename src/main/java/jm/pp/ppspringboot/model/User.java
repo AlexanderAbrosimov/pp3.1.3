@@ -4,10 +4,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -18,8 +15,14 @@ public class User implements UserDetails {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "firstName")
+    private String firstName;
+
+    @Column(name = "lastName")
+    private String lastName;
+
     @Column(name = "username", unique = true)
-    private String username;
+    private String username; //email
 
     @Column(name = "age")
     private int age;
@@ -36,7 +39,9 @@ public class User implements UserDetails {
 
     public User() {}
 
-    public User(String username, int age, String password, Set<Role> roles) {
+    public User(String firstName, String lastName, String username, int age, String password, Set<Role> roles) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.age = age;
         this.password = password;
@@ -85,12 +90,37 @@ public class User implements UserDetails {
         return roles;
     }
 
+    public String printAuthorities() {
+        StringBuilder sbRoles = new StringBuilder();
+        for (Role role: roles) {
+            sbRoles.append(role.getAuthority().replace("ROLE_", ""));
+            sbRoles.append(" ");
+        }
+        return sbRoles.toString();
+    }
+
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setRole(Role role) {

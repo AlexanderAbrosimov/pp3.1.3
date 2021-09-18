@@ -4,12 +4,11 @@ import jm.pp.ppspringboot.model.User;
 import jm.pp.ppspringboot.service.RoleService;
 import jm.pp.ppspringboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/")
@@ -29,20 +28,24 @@ public class StructureController {
     }
 
     @GetMapping("/user")
-    public String userPage(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("user", userService.getUserByUsername(auth.getName()));
+    public String userPage(Model model, Principal pr) {
+        User principal = userService.getUserByUsername(pr.getName());
+        model.addAttribute("principal", principal);
         return "user";
     }
 
     @GetMapping("/admin")
-    public String index(Model model) {
+    public String index(@ModelAttribute("user") User user, Model model, Principal pr) {
+        model.addAttribute("principal", userService.getUserByUsername(pr.getName()));
         model.addAttribute("users", userService.findAllUsers());
+        model.addAttribute("allRoles", roleService.findAll());
         return "admin";
     }
 
     @GetMapping("/admin/new")
-    public String newUser(Model model) {
+    public String newUser(Model model, Principal pr) {
+        User principal = userService.getUserByUsername(pr.getName());
+        model.addAttribute("principal", principal);
         model.addAttribute("user", new User());
         model.addAttribute("allRoles", roleService.findAll());
         return "new";
@@ -58,15 +61,8 @@ public class StructureController {
         return "redirect:/admin";
     }
 
-    @GetMapping("/admin/{id}/edit")
-    public String edit(@PathVariable("id") Long id, Model model){
-        model.addAttribute("user", userService.getUserById(id));
-        model.addAttribute("allRoles", roleService.findAll());
-        return "edit";
-    }
-
     @PatchMapping("/admin/{id}")
-    public String update(@ModelAttribute("user") User user,
+    public String update(@PathVariable("id") Long id, @ModelAttribute("user") User user,
                          @RequestParam("rolesSelected") Long[] rolesId) {
         for(Long roleId: rolesId) {
             user.setRole(roleService.getRoleById(roleId));
@@ -80,5 +76,4 @@ public class StructureController {
         userService.delete(id);
         return "redirect:/admin";
     }
-
 }

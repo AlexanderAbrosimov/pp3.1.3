@@ -1,48 +1,123 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
-    <title>New User</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Users</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        #sidebar {
+            height: calc(100vh - 3.5rem);
+            flex-direction: column;
+            padding: 0px;
+        }
+        #adminPanel {
+            padding-left: 90px;
+            padding-top: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
-    Enter username:
-    <br>
-    <input type="text" th:field="*{username}" id="username"/>
-    <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</div>
-    <br>
-    <br>
-    Enter password:
-    <br>
-    <input type="text" th:field="*{password}" id="password"/>
-    <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
-    <br>
-    <br>
-    Enter age:
-    <br>
-    <input type="text" th:field="*{age}" id="age"/>
-    <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</div>
-    <br>
-    <br>
-    <div>
-    Choose role:
-    <br>
-    <select name="rolesSelected" multiple required size="3">
-        <option disabled selected>select role</option>
-        <div th:each="role : ${allRoles}">
-            <option th:text="${role.getName()}" th:value="${role.getId()}" name="roles"/>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="col-11">
+            <b class="navbar-text text-light" href="#" th:text="${principal.getUsername()}">VALUE</b>
+            <nobr class="navbar-text text-light">with roles: </nobr>
+            <a class="navbar-text text-light" href="#" th:text="${principal.printAuthorities()}">VALUE</a>
         </div>
-    </select>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href='/logout'>Logout</a>
+            </li>
+        </ul>
     </div>
-    <input type="submit" value="Create!"/>
-</form>
-
-<br>
-<button type="button" onclick="window.location.href = '/admin';">Back</button>
-
-<br>
-<button type="button" onclick="window.location.href = '/logout';">Logout</button>
-
+</nav>
+<nav id="sidebar" class="col-2 nav bg-white float-left">
+    <ul id="navbar-side" class="navbar-nav" style="padding-top:20px;">
+        <a class="btn btn-primary text-white"><div class="float-left">Admin</div></a>
+        <a class="btn text-primary" href="/user">
+            <div class="float-left">
+                User
+            </div>
+        </a>
+    </ul>
+    </div>
+    </div>
+</nav>
+</div>
+<div id="adminPanel" class="container bg-light sidebar">
+    <h1 id="admin">Admin panel</h1>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="/admin">Users table</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab"   href='#'>New User</a>
+        </li>
+    </ul>
+    <div class="card card-default">
+        <h4 class="card-header">Add new user</h4>
+        <div class="card-body text-center">
+            <form th:method="POST" th:action="@{/admin/new}" th:object="${user}">
+                <b>First name</b>
+                <br>
+                <input type="text" th:field="*{firstName}" id="firstName"/>
+                <div style="color:red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">firstName error</div>
+                <br>
+                <b>Last name</b>
+                <br>
+                <input type="text" th:field="*{lastName}" id="lastName"/>
+                <div style="color:red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Username error</div>
+                <br>
+                <b>Age</b>
+                <br>
+                <input type="text" th:field="*{age}" id="age"/>
+                <div style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Age error</div>
+                <br>
+                <b>Email</b>
+                <br>
+                <input type="text" th:field="*{username}" id="username"/>
+                <div style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username error</div>
+                <br>
+                <b>Password</b>
+                <br>
+                <input type="text" th:field="*{password}" id="password"/>
+                <div style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password error</div>
+                <br>
+                <div>
+                    <b>Role</b>
+                <br>
+                <select name="rolesSelected" multiple required size="3">
+                    <option disabled selected>select role</option>
+                    <div th:each="role : ${allRoles}">
+                        <option th:text="${role.getName()}" th:value="${role.getId()}" name="roles"/>
+                    </div>
+                </select>
+                </div>
+                <br>
+                <input class="btn btn-success" type="submit" value="Add new user"/>
+            </form>
+        </div>
+    </div>
+    <!--  <button class="btn" type="button" onclick="window.location.href = '/admin/new';">Create new user</button>-->
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

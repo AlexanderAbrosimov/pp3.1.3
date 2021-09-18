@@ -30,8 +30,8 @@ public class DataInitializer {
         allRoles.add(role1);
         allRoles.add(role2);
         userRole.add(role2);
-        User root = new User("root", 30, "1", allRoles);
-        User user = new User("user", 20, "1", userRole);
+        User root = new User("FirstName", "LastName", "root", 30, "1", allRoles);
+        User user = new User("user", "user", "user@mail.ru", 20, "1", userRole);
 
         roleService.save(role1);
         roleService.save(role2);
