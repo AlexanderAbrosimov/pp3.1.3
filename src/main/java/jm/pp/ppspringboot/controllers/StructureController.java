@@ -54,7 +54,7 @@ public class StructureController {
     @PostMapping("/admin/new")
     public String create(@ModelAttribute("user") User user,
                          @RequestParam("rolesSelected") Long[] rolesId) {
-        for(Long roleId: rolesId) {
+        for (Long roleId : rolesId) {
             user.setRole(roleService.getRoleById(roleId));
         }
         userService.save(user);
@@ -64,7 +64,7 @@ public class StructureController {
     @PatchMapping("/admin/{id}")
     public String update(@PathVariable("id") Long id, @ModelAttribute("user") User user,
                          @RequestParam("rolesSelected") Long[] rolesId) {
-        for(Long roleId: rolesId) {
+        for (Long roleId : rolesId) {
             user.setRole(roleService.getRoleById(roleId));
         }
         userService.update(user);
@@ -72,7 +72,7 @@ public class StructureController {
     }
 
     @DeleteMapping("/admin/{id}")
-    public String delete(@PathVariable("id") Long id){
+    public String delete(@PathVariable("id") Long id) {
         userService.delete(id);
         return "redirect:/admin";
     }

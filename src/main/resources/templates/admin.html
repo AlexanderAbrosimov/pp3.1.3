@@ -99,8 +99,7 @@
                             </form>
                         </td>
 
-                        <form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}"
-                              th:object="${user}">
+                        <form th:method="PATCH" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
 
                             <div class="modal" th:attr="id=${'u' + user.id}"
                                  th:aria-labelledby="${user.getId()}">
@@ -114,27 +113,35 @@
                                         <div class="modal-body text-center">
                                             <b>ID</b>
                                             <br>
-                                            <input type="text" th:value="*{id}" id="id" disabled/>
+                                            <input type="text"
+                                                   class="form-control"
+                                                   id="id" name="id"
+                                                   th:value="${user.getId()}" disabled/>
                                             <br>
                                             <b>First name</b>
                                             <br>
-                                            <input type="text" th:value="*{firstName}" id="firstName"/>
+                                            <input type="text" class="form-control" id="firstName" name="firstName"
+                                                   th:value="${user.getFirstName()}"/>
                                             <br>
                                             <b>Last name</b>
                                             <br>
-                                            <input type="text" th:value="*{lastName}" id="lastName"/>
+                                            <input type="text" class="form-control" id="lastName" name="lastName"
+                                                   th:value="${user.getLastName()}"/>
                                             <br>
                                             <b>Age</b>
                                             <br>
-                                            <input type="text" th:value="*{age}" id="age"/>
+                                            <input type="text" class="form-control" id="age" name="age"
+                                                   th:value="${user.getAge()}"/>
                                             <br>
                                             <b>Email</b>
                                             <br>
-                                            <input type="text" th:value="*{username}" id="username"/>
+                                            <input type="text" class="form-control" id="username" name="username"
+                                                   th:value="${user.getUsername()}"/>
                                             <br>
                                             <b>Enter password:</b>
                                             <br>
-                                            <input type="text" th:value="*{password}" id="password"/>
+                                            <input  type="text" class="form-control" id="password" name="password"
+                                                    th:value="${user.getPassword()}"/>
                                             <br>
                                             <div>
                                                 <b>Role</b>
