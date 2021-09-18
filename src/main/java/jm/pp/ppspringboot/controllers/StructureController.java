@@ -62,7 +62,7 @@ public class StructureController {
     }
 
     @PatchMapping("/admin/{id}")
-    public String update(@PathVariable("id") Long id, @ModelAttribute("user") User user,
+    public String update(@ModelAttribute("user") User user,
                          @RequestParam("rolesSelected") Long[] rolesId) {
         for (Long roleId : rolesId) {
             user.setRole(roleService.getRoleById(roleId));
