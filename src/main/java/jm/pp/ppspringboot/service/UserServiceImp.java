@@ -5,8 +5,6 @@ import jm.pp.ppspringboot.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
 import java.util.List;
 
 @Service
@@ -23,7 +21,7 @@ public class UserServiceImp implements UserService {
 
    @Override
    public List<User> findAllUsers() {
-      return userDao.findAll();
+      return userDao.findAllUsers();
    }
 
    @Override
@@ -38,10 +36,9 @@ public class UserServiceImp implements UserService {
    }
 
    @Override
-   public User getUserByUsername(String username) {
-      return userDao.getUserByUsername(username);
+   public User getUserByEmail(String email) {
+      return userDao.getUserByEmail(email);
    }
-
 
    @Override
    public void update(User user) {
@@ -51,10 +48,8 @@ public class UserServiceImp implements UserService {
       userDao.update(user);
    }
 
-
    @Override
    public void delete(Long id) {
       userDao.delete(id);
    }
-
 }

@@ -1,9 +1,7 @@
 package jm.pp.ppspringboot.DAO;
 
-
 import jm.pp.ppspringboot.model.User;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
@@ -14,9 +12,9 @@ public class UserDaoImp implements UserDao {
    private EntityManager em;
 
    @Override
-   public User getUserByUsername(String username) {
-      return em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
-              .setParameter("username", username)
+   public User getUserByEmail(String email) {
+      return em.createQuery("SELECT u FROM User u WHERE u.email = :email", User.class)
+              .setParameter("email", email)
               .getSingleResult();
    }
 
@@ -26,7 +24,7 @@ public class UserDaoImp implements UserDao {
    }
 
    @Override
-   public List<User> findAll() {
+   public List<User> findAllUsers() {
       return em.createQuery("SELECT u FROM User u", User.class)
               .getResultList();
    }

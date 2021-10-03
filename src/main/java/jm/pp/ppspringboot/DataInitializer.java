@@ -5,10 +5,8 @@ import jm.pp.ppspringboot.model.User;
 import jm.pp.ppspringboot.service.RoleService;
 import jm.pp.ppspringboot.service.UserService;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.Set;
+
 
 @Component
 public class DataInitializer {
@@ -23,20 +21,31 @@ public class DataInitializer {
     @PostConstruct
     private void init() {
 
-        Role role1 = new Role("ROLE_ADMIN");
-        Role role2 = new Role("ROLE_USER");
-        Set<Role> allRoles = new HashSet<>();
-        Set<Role> userRole = new HashSet<>();
-        allRoles.add(role1);
-        allRoles.add(role2);
-        userRole.add(role2);
-        User root = new User("FirstName", "LastName", "root", 30, "1", allRoles);
-        User user = new User("user", "user", "user@mail.ru", 20, "1", userRole);
+        Role role1 = new Role();
+        role1.setRole("ROLE_USER");
+        Role role2 = new Role();
+        role2.setRole("ROLE_ADMIN");
+
+        User root = new User();
+        root.setFirstName("FirstName");
+        root.setLastName("LastName");
+        root.setEmail("root");
+        root.setAge(30);
+        root.setPassword("1");
+        root.setRole(role1);
+        root.setRole(role2);
+
+        User user = new User();
+        user.setFirstName("User");
+        user.setLastName("User");
+        user.setEmail("user");
+        user.setAge(20);
+        user.setPassword("1");
+        user.setRole(role1);
 
         roleService.save(role1);
         roleService.save(role2);
         userService.save(root);
         userService.save(user);
-
     }
 }

@@ -6,6 +6,7 @@ import jm.pp.ppspringboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -22,58 +23,17 @@ public class StructureController {
         this.roleService = roleService;
     }
 
-    @RequestMapping(value = "login", method = RequestMethod.GET)
-    public String loginPage() {
-        return "login";
-    }
-
     @GetMapping("/user")
     public String userPage(Model model, Principal pr) {
-        User principal = userService.getUserByUsername(pr.getName());
+        User principal = userService.getUserByEmail(pr.getName());
         model.addAttribute("principal", principal);
-        return "user";
+        return "index";
     }
 
     @GetMapping("/admin")
-    public String index(@ModelAttribute("user") User user, Model model, Principal pr) {
-        model.addAttribute("principal", userService.getUserByUsername(pr.getName()));
-        model.addAttribute("users", userService.findAllUsers());
-        model.addAttribute("allRoles", roleService.findAll());
-        return "admin";
-    }
-
-    @GetMapping("/admin/new")
-    public String newUser(Model model, Principal pr) {
-        User principal = userService.getUserByUsername(pr.getName());
-        model.addAttribute("principal", principal);
-        model.addAttribute("user", new User());
-        model.addAttribute("allRoles", roleService.findAll());
-        return "new";
-    }
-
-    @PostMapping("/admin/new")
-    public String create(@ModelAttribute("user") User user,
-                         @RequestParam("rolesSelected") Long[] rolesId) {
-        for (Long roleId : rolesId) {
-            user.setRole(roleService.getRoleById(roleId));
-        }
-        userService.save(user);
-        return "redirect:/admin";
-    }
-
-    @PatchMapping("/admin/{id}")
-    public String update(@ModelAttribute("user") User user,
-                         @RequestParam("rolesSelected") Long[] rolesId) {
-        for (Long roleId : rolesId) {
-            user.setRole(roleService.getRoleById(roleId));
-        }
-        userService.update(user);
-        return "redirect:/admin";
-    }
-
-    @DeleteMapping("/admin/{id}")
-    public String delete(@PathVariable("id") Long id) {
-        userService.delete(id);
-        return "redirect:/admin";
+    public String info(@ModelAttribute("user") User user, ModelMap model, Principal pr) {
+        model.addAttribute("principal", userService.getUserByEmail(pr.getName()));
+        model.addAttribute("roles", roleService.findAll());
+        return "index";
     }
 }

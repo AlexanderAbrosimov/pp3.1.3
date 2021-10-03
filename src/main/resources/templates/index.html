@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Info</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        #sidebar {
+            height: calc(100vh - 3.5rem);
+            flex-direction: column;
+            padding: 0px;
+        }
+    </style>
+</head>
+<body>
+<div class="navbar navbar-dark bg-dark">
+    <div class="col-11">
+        <h5><p class="text-light bg-dark"
+               th:text="${principal.getUsername()} + ' with roles: ' + ${principal.printAuthorities()}"></p></h5>
+
+    </div>
+    <div class="col-1">
+        <h5><a class="text-secondary  float-right" href="/logout">Logout</a></h5>
+    </div>
+</div>
+
+<div class="container-fluid bg-light text-dark">
+    <div class="row bg-light text-dark">
+        <div id="sidebar" class="col-2 bg-white text-dark">
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <br>
+                <a class="nav-link active" id="home-tab" data-toggle="pill" href="#home" role="tab"
+                   aria-controls="home" aria-selected="true"
+                   th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                    Admin
+                </a>
+                <a class="nav-link" id="profile-tab" data-toggle="pill" href="#profile" role="tab"
+                   aria-controls="profile" aria-selected="false">
+                    User
+                </a>
+            </div>
+        </div>
+        <div class="col-10 bg-light text-dark">
+            <div class="container-fluid p-3 mb-2 bg-light text-dark">
+                <div class="tab-content" id="tabContent">
+                    <div class="tab-pane active" id="home" role="tabpanel"
+                         aria-labelledby="home-tab">
+                        <h1>Admins panel</h1>
+                        <div class="p-3 mb-2 bg-light text-dark">
+                            <nav>
+                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab"
+                                       href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
+                                        Users Table
+                                    </a>
+                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab"
+                                       href="#nav-profile" role="tab" aria-controls="nav-profile"
+                                       aria-selected="false">
+                                        New User
+                                    </a>
+                                </div>
+                            </nav>
+                        </div>
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane active" id="nav-home" role="tabpanel"
+                                 aria-labelledby="nav-home-tab">
+                                <div class="container">
+                                    <h4 class="card-header">
+                                        All users
+                                    </h4>
+                                    <div class="p-3 mb-2 bg-white text-dark">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">ID</th>
+                                                <th scope="col">First Name</th>
+                                                <th scope="col">Last Name</th>
+                                                <th scope="col">Age</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Role</th>
+                                                <th scope="col">Edit</th>
+                                                <th scope="col">Delete</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="usersTable">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="nav-profile" role="tabpanel"
+                                 aria-labelledby="nav-profile-tab">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-4">
+                                        </div>
+                                        <div class="col text-center">
+                                            <form class="createForm" id="createForm">
+                                                <div class="form-group">
+                                                    <div class="form-group col-md-4 text-center">
+                                                        <label align="center" for="inputFirstName"><p
+                                                                class="font-weight-bold">First Name</p></label>
+                                                        <input type="text" class="form-control" id="inputFirstName"
+                                                               placeholder="First Name" name="firstName">
+                                                    </div>
+                                                    <div class="form-group col-md-4 text-center">
+                                                        <label for="inputLastName"><p class="font-weight-bold">Last
+                                                            Name</p></label>
+                                                        <input type="text" class="form-control" id="inputLastName"
+                                                               placeholder="Last Name" name="lastName">
+                                                    </div>
+                                                    <div class="form-group col-md-4 text-center">
+                                                        <label for="inputAge"><p class="font-weight-bold">Age</p>
+                                                        </label>
+                                                        <input type="number" class="form-control" id="inputAge"
+                                                               placeholder="Age" name="age">
+                                                    </div>
+                                                    <div class="form-group col-md-4 text-center">
+                                                        <label for="inputEmail"><p class="font-weight-bold">
+                                                            Email</p></label>
+                                                        <input type="text" class="form-control" id="inputEmail"
+                                                               placeholder="Email" name="email">
+                                                    </div>
+                                                    <div class="form-group col-md-4 text-center">
+                                                        <label for="inputPassword"><p class="font-weight-bold">
+                                                            Password</p></label>
+                                                        <input type="text" class="form-control" id="inputPassword"
+                                                               placeholder="Password" name="password">
+                                                    </div>
+                                                    <div class="form-group col-md-4 text-center">
+                                                        <label for="inputRole"><p class="font-weight-bold">Role</p>
+                                                        </label>
+                                                        <select id="inputRole" class="form-control" multiple
+                                                                size="2" name="roles">
+                                                            <option th:each="role : ${roles}"
+                                                                    th:value="${role.getRole()}"
+                                                                    th:utext="${role.getRole()}"></option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <div class="text-center">
+                                                            <input class="btn btn-success " type="submit"
+                                                                   value="Create!">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="profile" role="tabpanel"
+                         aria-labelledby="profile-tab">
+                        <br>
+                        <div th:insert="~{blocks/fragment_user :: userInfo}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:insert="~{blocks/fragment_delete :: deleteModal}"></div>
+    <div th:insert="~{blocks/fragment_edit :: editModal}"></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="/index.js"></script>
+<div th:if="!${#authorization.expression('hasRole(''ADMIN'')')}">
+    <script>
+        function userTab() {
+            byId("profile-tab").click()
+        }
+
+        userTab()
+    </script>
+</div>
+</body>
+</html>

@@ -2,12 +2,9 @@ package jm.pp.ppspringboot.DAO;
 
 import jm.pp.ppspringboot.model.Role;
 import org.springframework.stereotype.Repository;
-
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
-
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
@@ -30,4 +27,12 @@ public class RoleDaoImpl implements RoleDao {
     public Role getRoleById(Long id) {
         return em.find(Role.class, id);
     }
+
+    @Override
+    public Role getRoleByName(String role) {
+        return (Role) em.createQuery("Select e FROM Role e WHERE e.role = :role")
+                .setParameter("role", role)
+                .getSingleResult();
+    }
 }
+

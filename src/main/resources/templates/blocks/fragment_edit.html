@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="editModal">
+    <div class="modal" id="editModal" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            x
+                        </span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="editForm">
+                        <div class="row">
+                            <div class="col-3">
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group text-center">
+                                    <label for="editId" class="font-weight-bold">
+                                        ID
+                                    </label>
+                                    <input type="text" class="form-control" id="editId" name="id" readonly/>
+                                </div>
+                                <div class="form-group text-center">
+                                    <label for="editFirstName" class="font-weight-bold">
+                                        First name
+                                    </label>
+                                    <input type="text" class="form-control" id="editFirstName" name="firstName"/>
+                                </div>
+                                <div class="form-group text-center">
+                                    <label for="editLastName" class="font-weight-bold">
+                                        Last name
+                                    </label>
+                                    <input type="text" class="form-control" id="editLastName" name="lastName"/>
+                                </div>
+                                <div class="form-group text-center">
+                                    <label for="editAge" class="font-weight-bold">
+                                        Age
+                                    </label>
+                                    <input type="number" class="form-control" id="editAge" name="age"/>
+                                </div>
+                                <div class="form-group text-center">
+                                    <label for="editEmail" class="font-weight-bold">
+                                        Email
+                                    </label>
+                                    <input type="text" class="form-control" id="editEmail" name="email"/>
+                                </div>
+                                <div class="form-group text-center">
+                                    <label for="editPassword" class="font-weight-bold">
+                                        Password
+                                    </label>
+                                    <input type="text" class="form-control" id="editPassword" name="password"/>
+                                </div>
+                                <div class="form-group text-center">
+                                    <label for="editRole"><p class="font-weight-bold">
+                                        Role
+                                    </p></label>
+                                    <select id="editRole" name="roles" class="form-control" multiple size="2">
+                                        <option th:each="role : ${roles}"
+                                                th:value="${role.getRole()}"
+                                                th:utext="${role.getRole()}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close
+                            </button>
+                            <input type="button" class="btn btn-primary editBTN" data-dismiss="modal"value="Edit"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
