@@ -43,7 +43,7 @@ public class UserServiceImp implements UserService {
    @Override
    public void update(User user) {
       if (!userDao.getUserById(user.getId()).getPassword().equals(user.getPassword())) {
-         user.setPassword(new BCryptPasswordEncoder(10).encode(user.getPassword()));
+         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
       }
       userDao.update(user);
    }
